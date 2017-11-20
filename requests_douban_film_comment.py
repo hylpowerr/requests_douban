@@ -70,7 +70,7 @@ def get_comments(url,headers,start,max_restart_num,movie_name,collection):
 
             print("正在存取第{}条数据".format(start+i))
             print(comment_dict)
-            # collection.update({'commenter': comment_dict['commenter']}, {'$setOnInsert': comment_dict}, upsert=True)
+            collection.update({'commenter': comment_dict['commenter']}, {'$setOnInsert': comment_dict}, upsert=True)
 
 
         headers['Referer'] = response.url
@@ -207,7 +207,7 @@ if __name__ =='__main__':
     #数据库连接
     client = MongoClient('localhost', 27017)
     db = client.douban
-    db.authenticate('douban_sa','sa')
+    db.authenticate('douban_sa','sa') #mongodb服务开启没有加上 --auth 参数时 需要注释该行
     collection = db.movie_comments
 
     try:
